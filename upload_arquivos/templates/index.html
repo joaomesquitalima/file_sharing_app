@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            max-width: 300px; /* ou ajuste conforme necessário */
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            max-width: 300px; /* ou ajuste conforme necessário */
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        a {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Sharing App</h1>
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+    <hr>
+    <h2>Arquivos compartilhados:</h2>
+    {% for file in os.listdir('arquivos') %}
+        <a href="{{ url_for('uploaded_file', filename=file) }}">{{ file }}</a><br>
+    {% endfor %}
+</body>
+</html>
