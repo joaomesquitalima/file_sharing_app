@@ -51,14 +51,64 @@
             text-align: center;
             margin: 20px 0;
         }
+        .pai{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center;
+            align-items: center; */
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.086);
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
 
         a {
-            display: block;
-            margin-bottom: 10px;
             text-decoration: none;
             color: #333;
-            text-align: center;
         }
+
+        @media only screen and (max-width: 600px) {
+    .pai {
+        display: flex;
+            flex-direction: column;
+            /* justify-content: center;
+            align-items: center; */
+            margin-left: 10px;
+            margin-right: 10px;
+            overflow: scroll;
+            
+           
+    }
+    .file-item{
+        justify-content: space-between;
+    }
+    .file-item a{
+        overflow: scroll;
+        
+    }
+}
     </style>
 </head>
 <body>
@@ -71,8 +121,37 @@
     </div>
     <hr>
     <h2>Arquivos compartilhados:</h2>
+    <div class="pai">
     {% for file in os.listdir('arquivos') %}
-        <a href="{{ url_for('uploaded_file', filename=file) }}">{{ file }}</a><br>
+        <div class="file-item">
+            <a href="{{ url_for('uploaded_file', filename=file) }}">{{ file }}</a>
+            <button class="delete-button" onclick="deleteFile('{{ file }}')">Excluir</button>
+        </div>
     {% endfor %}
+    </div>
+
+    <script>
+        function deleteFile(filename) {
+        if (confirm("Tem certeza que deseja excluir este arquivo?")) {
+            fetch(`/delete/${filename}`, {
+                method: 'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Arquivo excluído: " + filename);
+                    // Recarregue a página ou remova o elemento da lista dinamicamente
+                    location.reload();
+                } else {
+                    alert("Erro ao excluir o arquivo.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                alert("Erro ao excluir o arquivo.");
+            });
+        }
+    }
+    </script>
 </body>
 </html>
