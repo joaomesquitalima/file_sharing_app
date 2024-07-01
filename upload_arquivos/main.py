@@ -12,7 +12,8 @@ class MeuAppFlask:
         self.app.route('/uploads/<filename>')(self.uploaded_file)
 
     def index(self):
-        return render_template('index.html', os=os)
+        files = os.listdir(self.app.config['UPLOAD_FOLDER'])
+        return render_template('index.html', os=os, files=files)
 
     def delete_file(self, filename):
         try:
@@ -25,11 +26,13 @@ class MeuAppFlask:
 
     def upload_file(self):
         if 'file' not in request.files:
+          
             return redirect(request.url)
 
         file = request.files['file']
 
         if file.filename == '':
+            # print("Escolha algo")
             return redirect(request.url)
 
         if file:
@@ -38,6 +41,8 @@ class MeuAppFlask:
             return redirect('/')
 
     def uploaded_file(self, filename):
+        
+        
         return send_from_directory(self.app.config['UPLOAD_FOLDER'], filename)
 
     def run(self):

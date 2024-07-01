@@ -4,154 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/bootstrap/bootstrap/css/bootstrap.css">
     <title>File Sharing App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
-        h1 {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input[type="file"] {
-            width: 100%;
-            max-width: 300px; /* ou ajuste conforme necessário */
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            max-width: 300px; /* ou ajuste conforme necessário */
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #ddd;
-            margin: 20px 0;
-        }
-
-        h2 {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .pai{
-            display: flex;
-            flex-direction: column;
-            /* justify-content: center;
-            align-items: center; */
-            margin-left: 100px;
-            margin-right: 100px;
-        }
-
-        .file-item {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.086);
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            
-        }
-
-        .delete-button {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        @media only screen and (max-width: 600px) {
-    .pai {
-        display: flex;
-            flex-direction: column;
-            /* justify-content: center;
-            align-items: center; */
-            margin-left: 10px;
-            margin-right: 10px;
-            overflow: scroll;
-            
-           
-    }
-    .file-item{
-        justify-content: space-between;
-    }
-    .file-item a{
-        overflow: scroll;
-        
-    }
-}
-    </style>
+    
 </head>
 <body>
     <h1>File Sharing App</h1>
+
     <div>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" onsubmit="return checkFile()">
+            <input type="file" name="file" id="fileInput">
+            <input type="submit" value="Enviar Arquivo">
+            <p id="error-message" class="error-message"></p>
         </form>
     </div>
     <hr>
     <h2>Arquivos compartilhados:</h2>
-    <div class="pai">
+    <div class="ms-5 me-5">
+    {%if files|length == 0 %}
+        <p>Sem arquivos</p>
+    {% else %}
     {% for file in os.listdir('arquivos') %}
         <div class="file-item">
-            <a href="{{ url_for('uploaded_file', filename=file) }}">{{ file }}</a>
-            <button class="delete-button" onclick="deleteFile('{{ file }}')">Excluir</button>
+            <div class="container-fluid row ">
+                <div class="col text-center">
+                    <a href="{{ url_for('uploaded_file', filename=file) }}">{{ file }}</a>
+                </div>
+            
+                <div class="col">
+    
+                <button class="delete-button mx-auto" onclick="deleteFile('{{ file }}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                  </svg>
+                </button>
+    
+                </div>
+
+            </div>
+            
         </div>
     {% endfor %}
+    {% endif %}
     </div>
 
-    <script>
-        function deleteFile(filename) {
-        if (confirm("Tem certeza que deseja excluir este arquivo?")) {
-            fetch(`/delete/${filename}`, {
-                method: 'DELETE',
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Arquivo excluído: " + filename);
-                    // Recarregue a página ou remova o elemento da lista dinamicamente
-                    location.reload();
-                } else {
-                    alert("Erro ao excluir o arquivo.");
-                }
-            })
-            .catch(error => {
-                console.error('Erro na requisição:', error);
-                alert("Erro ao excluir o arquivo.");
-            });
-        }
-    }
+    
+
+    <script src="../static/index.js">
+      
+   
     </script>
+
+    <script src="../static/bootstrap/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>
