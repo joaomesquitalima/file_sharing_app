@@ -4,12 +4,14 @@ import os
 class MeuAppFlask:
     def __init__(self):
         self.app = Flask(__name__)
-        self.app.config['UPLOAD_FOLDER'] = 'arquivos'
+        self.app.config['UPLOAD_FOLDER'] = 'upload_arquivos/arquivos/'
+        # self.app.config['UPLOAD_'] = 'C:/Users/esquita/Desktop/midias'
+        
         
         self.app.route('/')(self.index)
         self.app.route('/delete/<filename>', methods=['DELETE'])(self.delete_file)
         self.app.route('/upload', methods=['POST'])(self.upload_file)
-        self.app.route('/uploads/<filename>')(self.uploaded_file)
+        self.app.route('/uploads/<filename>',methods=['GET'])(self.uploaded_file)
 
     def index(self):
         files = os.listdir(self.app.config['UPLOAD_FOLDER'])
@@ -17,7 +19,7 @@ class MeuAppFlask:
 
     def delete_file(self, filename):
         try:
-            file_path = os.path.join(self.app.config['UPLOAD_FOLDER'], filename)
+            file_path = os.path.join("upload_arquivos/arquivos", filename)
             os.remove(file_path)
             return jsonify({'success': True})
         except Exception as e:
@@ -42,11 +44,15 @@ class MeuAppFlask:
 
     def uploaded_file(self, filename):
         
-        
-        return send_from_directory(self.app.config['UPLOAD_FOLDER'], filename)
+        return send_from_directory('arquivos/',filename)
+    
+
 
     def run(self):
         self.app.run(debug=False, host='0.0.0.0', port=5000)
+
+
+
 
 if __name__ == '__main__':
     meu_app = MeuAppFlask()

@@ -18,10 +18,6 @@ function deleteFile(filename) {
             alert("Erro ao excluir o arquivo.");
         });
     }
-
-   
-
-   
 }
 
 function checkFile() {
