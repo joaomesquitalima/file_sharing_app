@@ -1,0 +1,51 @@
+Turma do FIT - Servoacionamentos - https://dontpad.com/fitt2_05_24
+
+https://drive.google.com/drive/folders/1G3KLklOEf4AetudcRbK4F0kVTdvtLi2z?usp=sharing
+
+Lista de Tags:
+M0
+Memória para iniciar comunicação cíclica.
+M1
+Memória para verificar comunicação cíclica.
+M2
+Memória para referenciamento.
+M3
+Memória para giro direto.
+M4
+Memória para giro reverso.
+M5
+Memória para voltar para o zero.
+X0
+Botão para voltar para o zero.
+X1
+Botão para giro direto.
+X2
+Botão para giro reverso.
+X3
+Chave para habilitar servodrive.
+B7F
+Habilita comunicação cíclica
+B3F
+Verifica se a comunicação cíclica estar habilitada.
+W41.0-W41.3
+Endereços para habilitar servo drive.
+W54
+Máximo torque direto.
+W55
+Máximo torque reverso.
+W40
+Configura o modo de uso do servo drive.
+W41.4
+Inicia o movimento.
+W41.6
+Seleciona tipo de encoder.
+W45
+Configura ângulo de rotação.
+W4C
+Configura velocidade.
+W0
+Ler o modo de operação do servo drive.
+W3
+Ler a posição angular
+W2.A e W2.C
+Verificam se o servo atingiu o objetivo.

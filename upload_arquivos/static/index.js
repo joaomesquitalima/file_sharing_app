@@ -33,3 +33,20 @@ function checkFile() {
 
         return true; 
     }
+
+
+function checkLogin(){
+    const nome = document.getElementById('nome').value;
+    const senha = document.getElementById('senha').value;
+    const errorMessage = document.getElementById('error-message');
+
+    errorMessage.textContent = '';
+    if(nome == 'mesquita' && senha == '040586ac'){
+        return true;
+    }
+    else{
+        errorMessage.textContent = "Senha incorreta";
+        return false; 
+    }
+    
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login" method="POST" onsubmit="return checkLogin()">
+        <label>Usuario:</label>
+        <input type="text" name="nome" id="nome" required>
+        <label>Senha :</label>
+        <input type="password" name="senha" id="senha" required>
+        <p id="error-message" class="error-message"></p>
+        <input type="submit" value="Logar">
+
+    </form>
+
+    <script src="../static/index.js">
+
+    </script>
+</body>
+</html>

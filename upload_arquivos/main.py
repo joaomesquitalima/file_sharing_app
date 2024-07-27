@@ -1,5 +1,11 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, jsonify
 import os
+import signal
+
+
+def shutdown_server():
+    os.kill(os.getpid(), signal.SIGINT)
+
 
 class MeuAppFlask:
     def __init__(self):
@@ -8,10 +14,28 @@ class MeuAppFlask:
         # self.app.config['UPLOAD_'] = 'C:/Users/esquita/Desktop/midias'
         
         
-        self.app.route('/')(self.index)
+
         self.app.route('/delete/<filename>', methods=['DELETE'])(self.delete_file)
         self.app.route('/upload', methods=['POST'])(self.upload_file)
         self.app.route('/uploads/<filename>',methods=['GET'])(self.uploaded_file)
+        self.app.route('/shutdown')(self.shutdown)
+        self.app.route('/')(self.home)
+        self.app.route('/login',methods=['POST'])(self.login)
+        self.app.route('/arquivos', methods=['POST'])(self.index)
+
+    def home(self):
+        return render_template('home.html')
+    
+    def login(self):
+        nome = request.form['nome']
+        senha = request.form['senha']
+
+        if nome == 'mesquita' and senha == '040586ac':
+            return redirect('/arquivos')
+
+
+        # if nome == 'mesquita' and senha == '040586ac':
+        #     return redirect('/arquivos')
 
     def index(self):
         files = os.listdir(self.app.config['UPLOAD_FOLDER'])
@@ -45,6 +69,11 @@ class MeuAppFlask:
     def uploaded_file(self, filename):
         
         return send_from_directory('arquivos/',filename)
+    
+
+    def shutdown(self):
+        shutdown_server()
+        return "Servidor está desligando..."
     
 
 
