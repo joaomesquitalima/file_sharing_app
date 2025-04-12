@@ -1,0 +1,42 @@
+.file-item-card {
+    max-width: 300px;
+    margin: 15px auto;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    background-color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .file-item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .file-name a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #333;
+    word-break: break-all;
+  }
+  
+  .delete-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #d9534f;
+    transition: transform 0.1s ease;
+  }
+  
+  .delete-button:hover {
+    transform: scale(1.2);
+    color: #c9302c;
+  }
+  
