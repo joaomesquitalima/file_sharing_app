@@ -20,22 +20,8 @@ class MeuAppFlask:
         self.app.route('/uploads/<filename>',methods=['GET'])(self.uploaded_file)
         self.app.route('/shutdown')(self.shutdown)
         self.app.route('/')(self.index)
-        # self.app.route('/login',methods=['POST'])(self.login)
+        
         self.app.route('/arquivos', methods=['POST','GET'])(self.index)
-
-    # def home(self):
-    #     return render_template('home.html')
-    
-    # def login(self):
-    #     nome = request.form['nome']
-    #     senha = request.form['senha']
-
-    #     if nome == 'mesquita' and senha == '040586ac':
-    #         return redirect('/arquivos')
-
-
-    #     # if nome == 'mesquita' and senha == '040586ac':
-    #     #     return redirect('/arquivos')
 
     def index(self):
         files = os.listdir(self.app.config['UPLOAD_FOLDER'])
