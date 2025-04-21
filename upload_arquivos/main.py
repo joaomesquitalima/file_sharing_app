@@ -24,7 +24,9 @@ class MeuAppFlask:
         self.app.route('/arquivos', methods=['POST','GET'])(self.index)
 
     def index(self):
-        files = os.listdir(self.app.config['UPLOAD_FOLDER'])
+        folder = self.app.config['UPLOAD_FOLDER']
+        files = sorted(os.listdir(folder), key=lambda x: os.path.getmtime(os.path.join(folder, x)), reverse=True)
+
         return render_template('index.html', os=os, files=files)
 
     def delete_file(self, filename):

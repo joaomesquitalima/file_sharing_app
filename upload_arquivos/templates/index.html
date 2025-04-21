@@ -27,7 +27,8 @@
     {%if files|length == 0 %}
         <p>Sem arquivos</p>
     {% else %}
-    {% for file in os.listdir('upload_arquivos/arquivos') %}
+    {% for file in files %}
+  
     <div class="file-item-card">
         <div class="card-content">
           <div class="file-name">
