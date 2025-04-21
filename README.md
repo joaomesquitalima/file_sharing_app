@@ -19,4 +19,7 @@ Uma aplicação web simples feita com Flask para upload, visualização, downloa
 
 2.Instale as dependencias:
    ```bash
-     pip install flask
+   pip install flask
+
+3.Execute a aplicação:
+ 
