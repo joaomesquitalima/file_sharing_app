@@ -16,7 +16,7 @@ Uma aplicação web simples feita com Flask para upload, visualização, downloa
    ```bash
    git clone https://github.com/seu-usuario/file-sharing-app.git
    cd file-sharing-app
-   ```
+
 2.Instale as dependencias:
-     ```bash
+   ```bash
      pip install flask
